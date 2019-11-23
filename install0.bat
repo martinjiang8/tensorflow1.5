@@ -21,7 +21,7 @@ call conda create -y -n tensorflow1 pip python=3.5
 
 cd c:\tensorflow1
 
-curl http://
+curl https://github.com/martinjiang8/tensorflow1.5.git/install1.bat -O install1.bat
 
 activate tensorflow1
 
