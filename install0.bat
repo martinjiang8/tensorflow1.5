@@ -21,6 +21,7 @@ call conda create -y -n tensorflow1 pip python=3.5
 
 copy c:\tensorflow1.5\install1.bat c:\tensorflow1\install1.bat
 copy c:\tensorflow1.5\set_path.bat c:\tensorflow1\set_path.bat
+copy c:\tensorflow1.5\train.bat c:\tensorflow1\train.bat
 
 cd c:\tensorflow1
 
