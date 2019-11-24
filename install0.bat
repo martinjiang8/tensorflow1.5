@@ -14,7 +14,7 @@ del faster_rcnn_inception_v2_coco_2018_01_28.tar
 SET src_folder=c:\tensorflow1.5
 SET tar_folder=c:\tensorflow1\models\research\object_detection
 for /f "delims=|" %%a IN ('dir "%src_folder%" /b') do move /Y %src_folder%\%%a %tar_folder%
-copy c:\tensorflow1\models\research\object_detection\proto_missing\*.* c:\tensorflow1\models\research\object_detection\proto
+copy c:\tensorflow1\models\research\object_detection\protos_missing\*.* c:\tensorflow1\models\research\object_detection\proto
 
 call conda create -y -n tensorflow1 pip python=3.5
 
