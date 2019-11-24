@@ -1,4 +1,7 @@
+cd c:\tensorflow1
+
 python -m pip install --upgrade pip
+
 pip install --ignore-installed --upgrade tensorflow-gpu==1.5
 
 call conda install -y -c anaconda protobuf
