@@ -2,7 +2,7 @@ cd\
 md tensorflow1
 cd tensorflow1
 
-git clone https://github.com/tensorflow/models.git
+git clone -b r1.5 https://github.com/tensorflow/models.git
 cd C:\tensorflow1\models\research\object_detection
 
 curl http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_v2_coco_2018_01_28.tar.gz -O faster_rcnn_inception_v2_coco_2018_01_28.tar.gz
