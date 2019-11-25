@@ -1,9 +1,9 @@
 # How To Train an Object Detection Classifier Using TensorFlow (GPU) on Windows 10 in 10 minutes
 
-EdjeElectronics did a great tutorial on how to train object detection classifier using tensorflow GPU on windows 10, (https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10)
-however the youtube was made two years ago, the GPU driver, CUDA, cuDNN, tensorflow had many other things had a lot revisions since then, it won't work if you simply choose to use latest revision.
-I tried to provide some scripts to automate the installation so save you days struggling on varies errors and missing files.
-I am not trying to replace or negative Edje's tutorial, actually after you sucessfully installed the softwares, I would suggest you go back to Edje's tutorial because he provided instructions about how and why to do these steps.
+EdjeElectronics did a great tutorial on how to train object detection classifier using tensorflow GPU on windows 10. (https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10)
+However the youtube was made two years ago, the GPU driver, CUDA, cuDNN, tensorflow, Python and many other things had a lot revisions since then, it won't work if you simply choose to install latest revision for all.
+I tried to provide some scripts to automate the installation so you won't struggling on varies errors and missing files.
+I am not trying to replace or negative Edje's tutorial, actually after you sucessfully installed the softwares, I would strongly suggest you go back to Edje's tutorial because he provided detailed instructions about how and why to do these things.
 
 install 7zip                       https://www.7-zip.org/download.html
 
@@ -15,9 +15,7 @@ install CUDA 9.0                   https://developer.nvidia.com/cuda-toolkit-arc
 
 download cuDNN 7.05                https://developer.nvidia.com/cudnn
 
-copy cudnn64_7.dll to CUDA bin folder
-
-CUDA path will be setup automaticly by software
+copy cudnn64_7.dll to CUDA bin folder, CUDA path will be setup automaticly by software
 
 install latest Anaconda            https://www.anaconda.com/distribution/#download-section
 
@@ -41,7 +39,7 @@ install1.bat
 
 cntl-c twice to exit jupyter-book
 
-
+For a new trainning test:
 
 open anaconda prompt in administrator mode
 
@@ -52,8 +50,3 @@ cd\tensorflow1
 set_path1.bat
 
 c:\tensorflow1\train.bat
-
-
-conda info --envs
-
-conda env remove --name ENVIRONMENT
