@@ -1,0 +1,188 @@
+// These protos contain the calibration parameters necessary for transforming
+// a model's original detection scores or logits. The parameters result from
+// fitting a calibration function on the model's outputs.
+
+syntax = "proto2";
+
+package object_detection.protos;
+
+// Message wrapper for various calibration configurations.
+message CalibrationConfig {
+  oneof calibrator {
+    // Class-agnostic calibration via linear interpolation (usually output from
+    // isotonic regression).
+    FunctionApproximation function_approximation = 1;
+
+    // Per-class calibration via linear interpolation.
+    ClassIdFunctionApproximations class_id_function_approximations = 2;
+
+    // Class-agnostic sigmoid calibration.
+    SigmoidCalibration sigmoid_calibration = 3;
+
+    // Per-class sigmoid calibration.
+    ClassIdSigmoidCalibrations class_id_sigmoid_calibrations = 4;
+
+    // Temperature scaling calibration.
+    TemperatureScalingCalibration temperature_scaling_calibration = 5;
+  }
+}
+
+// Message for class-agnostic domain/range mapping for function
+// approximations.
+message FunctionApproximation {
+  // Message mapping class labels to indices
+  optional XYPairs x_y_pairs = 1;
+}
+
+// Message for class-specific domain/range mapping for function
+// approximations.
+message ClassIdFunctionApproximations {
+  // Message mapping class ids to indices.
+  map<int32, XYPairs> class_id_xy_pairs_map = 1;
+}
+
+// Message for class-agnostic Sigmoid Calibration.
+message SigmoidCalibration {
+  // Message mapping class index to Sigmoid Parameters
+  optional SigmoidParameters sigmoid_parameters = 1;
+}
+
+// Message for class-specific Sigmoid Calibration.
+message ClassIdSigmoidCalibrations {
+  // Message mapping class index to Sigmoid Parameters.
+  map<int32, SigmoidParameters> class_id_sigmoid_parameters_map = 1;
+}
+
+// Message for Temperature Scaling Calibration.
+message TemperatureScalingCalibration {
+  optional float scaler = 1;
+}
+
+// Description of data used to fit the calibration model. CLASS_SPECIFIC
+// indicates that the calibration parameters are derived from detections
+// pertaining to a single class. ALL_CLASSES indicates that parameters were
+// obtained by fitting a model on detections from all classes (including the
+// background class).
+enum TrainingDataType {
+  DATA_TYPE_UNKNOWN = 0;
+  ALL_CLASSES = 1;
+  CLASS_SPECIFIC = 2;
+}
+
+// Message to store a domain/range pair for function to be approximated.
+message XYPairs {
+  message XYPair {
+    optional float x = 1;
+    optional float y = 2;
+  }
+
+  // Sequence of x/y pairs for function approximation.
+  repeated XYPair x_y_pair = 1;
+
+  // Description of data used to fit the calibration model.
+  optional TrainingDataType training_data_type = 2;
+}
+
+// Message defining parameters for sigmoid calibration.
+message SigmoidParameters {
+  optional float a = 1 [default = -1.0];
+  optional float b = 2 [default = 0.0];
+}
+syntax = "proto2";
+
+package object_detection.protos;
+
+message FlexibleGridAnchorGenerator {
+  repeated AnchorGrid anchor_grid = 1;
+
+  // Whether to produce anchors in normalized coordinates.
+  optional bool normalize_coordinates = 2 [default = true];
+}
+
+message AnchorGrid {
+  // The base sizes in pixels for each anchor in this anchor layer.
+  repeated float base_sizes = 1;
+
+  // The aspect ratios for each anchor in this anchor layer.
+  repeated float aspect_ratios = 2;
+
+  // The anchor height stride in pixels.
+  optional uint32 height_stride = 3;
+
+  // The anchor width stride in pixels.
+  optional uint32 width_stride = 4;
+
+  // The anchor height offset in pixels.
+  optional uint32 height_offset = 5 [default = 0];
+
+  // The anchor width offset in pixels.
+  optional uint32 width_offset = 6 [default = 0];
+}
+syntax = "proto2";
+
+package object_detection.protos;
+
+// Message to configure graph rewriter for the tf graph.
+message GraphRewriter {
+  optional Quantization quantization = 1;
+  extensions 1000 to max;
+}
+
+// Message for quantization options. See
+// tensorflow/contrib/quantize/python/quantize.py for details.
+message Quantization {
+  // Number of steps to delay before quantization takes effect during training.
+  optional int32 delay = 1 [default = 500000];
+
+  // Number of bits to use for quantizing weights.
+  // Only 8 bit is supported for now.
+  optional int32 weight_bits = 2 [default = 8];
+
+  // Number of bits to use for quantizing activations.
+  // Only 8 bit is supported for now.
+  optional int32 activation_bits = 3 [default = 8];
+
+  // Whether to use symmetric weight quantization.
+  optional bool symmetric = 4 [default = false];
+}
+  syntax = "proto2";
+
+package object_detection.protos;
+
+// Configuration proto for RetinaNet anchor generator described in
+// https://arxiv.org/abs/1708.02002. See
+// anchor_generators/multiscale_grid_anchor_generator.py for details.
+message MultiscaleAnchorGenerator {
+  // minimum level in feature pyramid
+  optional int32 min_level = 1 [default = 3];
+
+  // maximum level in feature pyramid
+  optional int32 max_level = 2 [default = 7];
+
+  // Scale of anchor to feature stride
+  optional float anchor_scale = 3 [default = 4.0];
+
+  // Aspect ratios for anchors at each grid point.
+  repeated float aspect_ratios = 4;
+
+  // Number of intermediate scale each scale octave
+  optional int32 scales_per_octave = 5 [default = 2];
+
+  // Whether to produce anchors in normalized coordinates.
+  optional bool normalize_coordinates = 6 [default = true];
+}
+syntax = "proto2";
+
+package object_detection.protos;
+
+import "object_detection/protos/box_coder.proto";
+import "object_detection/protos/matcher.proto";
+import "object_detection/protos/region_similarity_calculator.proto";
+
+// Message to configure Target Assigner for object detectors.
+message TargetAssigner {
+  optional Matcher matcher = 1;
+  optional RegionSimilarityCalculator similarity_calculator = 2;
+  optional BoxCoder box_coder = 3;
+}
+
