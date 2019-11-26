@@ -20,7 +20,7 @@ for /f "delims=|" %%a IN ('dir "%src_folder%" /b') do move /Y %src_folder%\%%a %
 
 copy c:\tensorflow1\models\research\object_detection\protos_missing\*.* c:\tensorflow1\models\research\object_detection\protos
 
-call conda create -n tensorflow1 pip python=3.5
+call conda create -y -n tensorflow1 pip python=3.5
 
 cd c:\tensorflow1
 activate tensorflow1
